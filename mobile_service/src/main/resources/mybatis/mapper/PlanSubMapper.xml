@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haco.mobile_service.DAO.PlanSubMapper" >
+
+    <select id="getPlanSubItems" resultType="PlanSubItem">
+        SELECT *
+        FROM plansublog
+        WHERE
+        userID = #{userID}
+    </select>
+
+    <select id="getRecentPlanSubItem" resultType="PlanSubItem">
+        SELECT *
+        FROM plansublog
+        WHERE
+        userID = #{userID} and planID = #{planID}
+        ORDER BY subDate DESC LIMIT 1
+    </select>
+
+    <insert id="addPlanSubItem" parameterType="PlanSubItem">
+        INSERT INTO
+        plansublog
+        (userID,planID,subDate,cost,validity)
+        VALUES
+        (#{userID}, #{planID},#{subDate},#{cost},#{validity})
+    </insert>
+
+    <update id="updatePlanSubItem" parameterType="PlanSubItem">
+        UPDATE
+        plansublog
+        SET
+        cost = #{subItem.cost},
+        validity = #{subItem.validity}
+        WHERE
+        userID = #{subItem.userID} and planID = #{subItem.planID} and subDate = #{subItem.subDate}
+    </update>
+
+    <delete id="deletePlanSubItems" >
+        DELETE FROM
+        plansublog
+        WHERE
+        subDate &lt; #{subDate}
+    </delete>
+</mapper>

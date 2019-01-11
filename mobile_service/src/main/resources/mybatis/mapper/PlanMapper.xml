@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haco.mobile_service.DAO.PlanMapper" >
+
+    <select id="getAllPlans" resultType="Plan">
+        SELECT *
+        FROM plan
+    </select>
+
+    <select id="getPlan" resultType="Plan">
+        SELECT *
+        FROM plan
+        WHERE planID = #{planID}
+    </select>
+
+    <insert id="addPlan" parameterType="Plan" >
+        INSERT INTO
+        plan
+        (planID,planName,callMins,mesCnt,localData,domData,planPrice)
+        VALUES
+        (#{planID}, #{planName}, #{callMins},#{mesCnt},#{localData},#{domData},#{planPrice})
+    </insert>
+
+    <update id="updatePlan" parameterType="Plan" >
+        UPDATE
+        plan
+        SET
+        planName = #{planName},
+        callMins = #{callMins},
+        mesCnt = #{mesCnt},
+        localData = #{localData},
+        domData = #{domData},
+        planPrice = #{planPrice}
+        WHERE
+        planID = #{planID}
+    </update>
+
+    <delete id="deletePlan" >
+        DELETE FROM
+        user
+        WHERE
+        planID =#{planID}
+    </delete>
+</mapper>

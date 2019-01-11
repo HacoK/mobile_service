@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haco.mobile_service.DAO.HstUsageMapper" >
+
+    <select id="getHstUsage" resultType="Usage">
+        SELECT *
+        FROM hstusage
+        WHERE userID = #{userID}
+    </select>
+
+    <select id="getHstUsageLimited" resultType="Usage">
+        SELECT *
+        FROM hstusage
+        WHERE userID = #{userID} and begDate &gt;= #{beg} and endDate &lt;= #{end}
+    </select>
+
+    <insert id="addHstUsage" parameterType="Usage" >
+        INSERT INTO
+        hstusage
+        (userID,plans,totalCall,totalMes,totalLocalData,totalDomData,begDate,endDate,pay)
+        VALUES
+        (#{userID}, #{plans}, #{totalCall},#{totalMes},#{totalLocalData},#{totalDomData},#{begDate},#{endDate},#{pay})
+    </insert>
+
+    <update id="updateHstUsage" parameterType="Usage" >
+        UPDATE
+        hstusage
+        SET
+        plans = #{plans},
+        totalCall = #{totalCall},
+        totalMes = #{totalMes},
+        totalLocalData = #{totalLocalData},
+        totalDomData = #{totalDomData},
+        pay = #{pay}
+        WHERE
+        userID = #{userID} and begDate = #{begDate} and endDate = #{endDate}
+    </update>
+
+    <delete id="deleteHstUsagesByUser" >
+        DELETE FROM
+        hstusage
+        WHERE
+        userID =#{userID}
+    </delete>
+
+    <delete id="deleteHstUsagesByDate" >
+        DELETE FROM
+        hstusage
+        WHERE
+        begDate &lt; #{deadline}
+    </delete>
+
+</mapper>
